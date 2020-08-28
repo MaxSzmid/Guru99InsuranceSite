@@ -1,16 +1,12 @@
 package com.insurance;
 
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
-
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import org.sonatype.inject.Description;
+import com.insurance.LoginPage;
 
 public class RegisterNewUserPage {
 	// Validate the message to make sure than the web page to test is the correct
@@ -55,6 +51,8 @@ public class RegisterNewUserPage {
 	@FindBy(xpath = "//input[@id='resetform']")
 	private WebElement resetButton;
 
+	private LoginPage loginPage;
+
 	/**
 	 * Initialize the web elements
 	 * 
@@ -74,6 +72,7 @@ public class RegisterNewUserPage {
 		Select occupationSelect = new Select(occupation);
 
 		if (isShowedTheWelcomeMessage.getText().equalsIgnoreCase("Sign up as a new user")) {
+			Thread.sleep(200); // a few seconds to wait for the page to load
 			titleSelect.selectByVisibleText("Sir");
 			firstName.sendKeys("Max");
 			surname.sendKeys("Szmid");
@@ -91,17 +90,31 @@ public class RegisterNewUserPage {
 			email.sendKeys("hjsdfjhnkfds@jkasd.com");
 			password.sendKeys("1234");
 			confirmPassword.sendKeys("1234");
-			Thread.sleep(10000);
-			resetButton.click();
 
 		} else {
-			throw new NoSuchElementException("No se encontro el elemento");
+			throw new NoSuchElementException("You not are in the page to register a new user.");
 		}
 	}
 
-	private void setSelector(WebElement elementToSelect, String text) {
-		Select select = new Select(elementToSelect);
-		select.selectByVisibleText(text);
+	public void clickOnRegisterButton() {
+		submitButton.click();
+	}
+
+	public void clickOnResetButton() {
+		resetButton.click();
+	}
+
+	public boolean validateUserRegistered() {
+		try {
+
+			if (isShowedTheWelcomeMessage.isDisplayed()) {
+				return true;
+			}
+			
+		} catch (Exception e) {
+			//dont do notinhg
+		}
+		return false;
 	}
 
 }

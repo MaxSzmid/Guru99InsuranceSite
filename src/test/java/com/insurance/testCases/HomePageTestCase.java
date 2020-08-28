@@ -1,5 +1,6 @@
 package com.insurance.testCases;
 
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,22 +15,27 @@ public class HomePageTestCase {
 	WebDriver driver;
 	HomePage home;
 	LoginPage login;
+
 	@Before
 	public void setUp() throws Exception {
 		driver = BrowserConnection.BrowserConnection("chrome");
 		login = new LoginPage(driver);
 		home = new HomePage(driver);
 		driver.get("http://demo.guru99.com/insurance/v1/index.php");
-		
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		Thread.sleep(200);
+		login.login("123@gmail.com", "123");
 	}
 
 	@Test
 	public void test() {
-		/**working here*/
+		home.clickOnButtonLogOut();
+		assertTrue(login.validateLoginPage());
+
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		driver.close();
 	}
 
 }

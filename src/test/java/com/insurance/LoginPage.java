@@ -16,11 +16,6 @@ public class LoginPage {
 	@FindBy(xpath = "//input[@name='submit']")
 	private WebElement buttonLogIn;
 
-	/**
-	 * Initialize the web elements
-	 * 
-	 * @param WebDriver
-	 */
 	public LoginPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
@@ -46,7 +41,7 @@ public class LoginPage {
 		}
 	}
 
-	public boolean validateLoginPage() {
+	public boolean validateLoginPage() throws NoSuchElementException {
 		return buttonLogIn.isDisplayed();
 	}
 }

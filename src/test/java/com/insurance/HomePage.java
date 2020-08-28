@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage {
 	@FindBy(xpath = "//input[contains(@value, 'Log out')]")
 	private WebElement registerButton;
+	@FindBy(xpath = "//div[contains(text(),'Signed in as')]")
+	private WebElement isLoggedIn;
 
 	public HomePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -18,7 +20,11 @@ public class HomePage {
 		try {
 			registerButton.click();
 		} catch (NoSuchElementException e) {
-			System.out.println(e);
+			System.out.println("The element was not foud." + e);
 		}
+	}
+
+	public boolean getValidateLogin() {
+		return isLoggedIn.getText().contains("Signed in as");
 	}
 }
